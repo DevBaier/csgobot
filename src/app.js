@@ -23,20 +23,43 @@ client.on('loggedOn', () => {
     client.gamesPlayed([730]);
 });
 
+client.on('friendsList', function () {
+    console.log('🔍 [BOT] Searching for friend requests...');
+    for (var i = 0; i < Object.keys(user.myFriends).length; i++) {
+        if (user.myFriends[Object.keys(user.myFriends)[i]] == SteamUser.EFriendRelationship.RequestRecipient) {
+            console.log('👥 [BOT] Added ' + Object.keys(user.myFriends)[i]);
+            hook.info('Info', '👥 [BOT] Added ' + 'https://steamcommunity.com/profiles/' + Object.keys(user.myFriends)[i]);
+            client.addFriend(Object.keys(user.myFriends)[i]);
+            client.chatMessage(steamID, '[AUTOMATIC MESSAGE] Hello! Thank your for adding me as a friend 🤖 - This is an automatically generated message');
+        }
+    }
+});
+
+client.on('friendRelationship', (steamID, relationship) => {
+	if (relationship == SteamUser.EFriendRelationship.RequestRecipient) 
+	{
+        console.log('🔍 [BOT] New friend requests...');
+        console.log('👥 [BOT] Added ' + steamID);
+        hook.info('Info', '👥 [BOT] Added ' + 'https://steamcommunity.com/profiles/' + steamID);
+		client.addFriend(steamID);
+		client.chatMessage(steamID, '[AUTOMATIC MESSAGE] Hello! Thank your for adding me as a friend 🤖 - This is an automatically generated message');
+	}
+});
+
 client.on('error', function (err) {
     switch (err.eresult) {
         case 5:
             console.error('❌ [BOT] Error: invalid password');
-            hook.error('Error', '❌ [BOT] Error: invalid password');
+            hook.err('Error', '❌ [BOT] Error: invalid password');
         case 84:
             console.error('❌ [BOT] Error: rate limit exceeded');
-            hook.error('Info', '❌ [BOT] Error: rate limit exceeded');
+            hook.err('Info', '❌ [BOT] Error: rate limit exceeded');
         case 6:
             console.error('❌ [BOT] Error: logged in elsewhere');
-            hook.error('Info', '❌ [BOT] Error: rate limit exceeded');
+            hook.err('Info', '❌ [BOT] Error: rate limit exceeded');
         default:
             console.error('❌ [BOT] Error: ' + err.eresult);
-            hook.error('Info', '❌ [BOT] Error: ' + err.eresult);
+            hook.err('Info', '❌ [BOT] Error: ' + err.eresult);
     }
 
     process.exit();
