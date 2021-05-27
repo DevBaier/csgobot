@@ -1,0 +1,16 @@
+{
+  "name": "nodecsgo",
+  "version": "1.0.0",
+  "description": "CSGO Bot",
+  "main": "app.js",
+  "scripts": {
+    "deploy": "docker build -t docker.devbaier.dev/nodecsgo . && docker push docker.devbaier.dev/nodecsgo",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Baier",
+  "license": "ISC",
+  "dependencies": {
+    "steam-totp": "^2.1.1",
+    "steam-user": "^4.19.8"
+  }
+}
