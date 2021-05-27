@@ -25,11 +25,11 @@ client.on('loggedOn', () => {
 
 client.on('friendsList', function () {
     console.log('🔍 [BOT] Searching for friend requests...');
-    for (var i = 0; i < Object.keys(user.myFriends).length; i++) {
-        if (user.myFriends[Object.keys(user.myFriends)[i]] == SteamUser.EFriendRelationship.RequestRecipient) {
-            console.log('👥 [BOT] Added ' + Object.keys(user.myFriends)[i]);
-            hook.info('Info', '👥 [BOT] Added ' + 'https://steamcommunity.com/profiles/' + Object.keys(user.myFriends)[i]);
-            client.addFriend(Object.keys(user.myFriends)[i]);
+    for (var i = 0; i < Object.keys(client.myFriends).length; i++) {
+        if (client.myFriends[Object.keys(client.myFriends)[i]] == SteamUser.EFriendRelationship.RequestRecipient) {
+            console.log('👥 [BOT] Added ' + Object.keys(client.myFriends)[i]);
+            hook.info('Info', '👥 [BOT] Added ' + 'https://steamcommunity.com/profiles/' + Object.keys(client.myFriends)[i]);
+            client.addFriend(Object.keys(client.myFriends)[i]);
             client.chatMessage(steamID, '[AUTOMATIC MESSAGE] Hello! Thank your for adding me as a friend 🤖 - This is an automatically generated message');
         }
     }
