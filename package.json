@@ -4,6 +4,7 @@
   "description": "CSGO Bot",
   "main": "app.js",
   "scripts": {
+    "start": "node src/app.js",
     "deploy": "docker build -t docker.devbaier.dev/nodecsgo . && docker push docker.devbaier.dev/nodecsgo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "steam-totp": "^2.1.1",
-    "steam-user": "^4.19.8"
+    "steam-user": "^4.19.8",
+    "webhook-discord": "^3.7.7"
   }
 }
