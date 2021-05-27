@@ -23,6 +23,25 @@ client.on('loggedOn', () => {
     client.gamesPlayed([730]);
 });
 
+client.on('error', function (err) {
+    switch (err.eresult) {
+        case 5:
+            console.error('❌ [BOT] Error: invalid password');
+            hook.error('Error', '❌ [BOT] Error: invalid password');
+        case 84:
+            console.error('❌ [BOT] Error: rate limit exceeded');
+            hook.error('Info', '❌ [BOT] Error: rate limit exceeded');
+        case 6:
+            console.error('❌ [BOT] Error: logged in elsewhere');
+            hook.error('Info', '❌ [BOT] Error: rate limit exceeded');
+        default:
+            console.error('❌ [BOT] Error: ' + err.eresult);
+            hook.error('Info', '❌ [BOT] Error: ' + err.eresult);
+    }
+
+    process.exit();
+});
+
 client.on('steamGuard', function(domain, callback, lastCodeWrong) {
 	if(lastCodeWrong) {
 		console.warn('⚠️ [BOT] Last code wrong, try again!');
