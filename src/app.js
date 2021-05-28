@@ -1,15 +1,10 @@
-const config = require('config');
+var config = require('../config/config.json');
 const SteamUser = require('steam-user');
 const SteamTotp = require('steam-totp');
 const GlobalOffensive = require('globaloffensive');
 const Webhook = require('webhook-discord');
 const Mongoose = require('mongoose');
-
-const steamConfig = config.get('steam');
-const discordConfig = config.get('discord');
-const mongoConfig = config.get('mongo');
-
-const hook = new Webhook.Webhook(discordConfig.csgoHookUrl);
+const hook = new Webhook.Webhook(config.discord.csgoHookUrl);
 
 const client = new SteamUser();
 const csgo = new GlobalOffensive(client);
@@ -17,19 +12,19 @@ const csgo = new GlobalOffensive(client);
 const User = require('./models/users');
 
 const logOnOptions = {
-    accountName: steamConfig.accountName,
-    password: steamConfig.password,
-    twoFactorCode: SteamTotp.generateAuthCode(steamConfig.sharedSecret)
+    accountName: config.steam.accountName,
+    password: config.steam.password,
+    twoFactorCode: SteamTotp.generateAuthCode(config.steam.sharedSecret)
 };
 
-Mongoose.connect(mongoConfig.mongoDB, {
+Mongoose.connect(config.mongo.mongoDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
 })
 
 Mongoose.connection.once('open',function(){
-    console.log('Database connected Successfully');
+    console.log('🌐 [BOT] Connection to DB successfully');
 }).on('error',function(err){
     console.log('Error', err);
 })
@@ -125,8 +120,8 @@ client.on('steamGuard', function(domain, callback, lastCodeWrong) {
 	}	
 });
 
-csgo.on("connectedToGC", function() {
-    console.log('✅ [BOT] Client Connected to GC');
+csgo.on('connectedToGC', function() {
+    console.log('🎮 [BOT] Client Connected to GC');
 });
 
 csgo.on('disconnectedFromGC', (reason) => {
