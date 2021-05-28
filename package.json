@@ -4,13 +4,17 @@
   "description": "CSGO Bot",
   "main": "app.js",
   "scripts": {
-    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "prod": "NODE_ENV=production node app.js",
     "deploy": "docker build -t docker.devbaier.dev/nodecsgo . && docker push docker.devbaier.dev/nodecsgo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Daniel Baier",
   "license": "ISC",
   "dependencies": {
+    "config": "^3.3.6",
+    "globaloffensive": "^2.1.0",
+    "mongoose": "^5.12.11",
     "steam-totp": "^2.1.1",
     "steam-user": "^4.19.8",
     "webhook-discord": "^3.7.7"
